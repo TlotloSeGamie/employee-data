@@ -1,0 +1,27 @@
+const handleNamesChange = (e) => {
+  setFormState({
+    ...formState,
+    names: e.target.value
+  });
+}
+
+const handleIdChange = (e) => {
+  setFormState({
+    ...formState,
+    id: e.target.value
+  });
+}
+
+const handleContactChange = (e) => {
+  setFormState({
+    ...formState,
+    contact: e.target.value
+  });
+}
+
+const handleEmailChange = (e) => {
+  setFormState({
+    ...formState,
+    email : e.target.value
+  });
+}
