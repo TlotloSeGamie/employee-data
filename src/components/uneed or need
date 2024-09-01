@@ -25,3 +25,23 @@ const handleEmailChange = (e) => {
     email : e.target.value
   });
 }
+
+
+
+.edit {
+  background-color: #28a745;
+  color: white;
+}
+
+.edit:hover {
+  background-color: #218838;
+}
+
+.delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete:hover {
+  background-color: #c82333;
+}

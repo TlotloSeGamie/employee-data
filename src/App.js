@@ -1,24 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Table from './components/Table';
 import Form from './components/Form';
+import Navbar from './components/Navbar';
 
 function App() {
   const [formOpen, setFormOpen] = useState(false);
-  const [formMode, setFormMode] = useState('add'); // 'add' or 'edit'
-  const [currentIndex, setCurrentIndex] = useState(null); // index of the item being edited
+  const [formMode, setFormMode] = useState('add'); 
+  const [currentIndex, setCurrentIndex] = useState(null); 
   const [registrationDetails, setRegistrationDetails] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [viewProfile, setViewProfile] = useState(null); 
+  const [idError, setIdError] = useState('');
+
+  useEffect(() => {
+    const storedDetails = JSON.parse(localStorage.getItem('registrationDetails')) || [];
+    setRegistrationDetails(storedDetails);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('registrationDetails', JSON.stringify(registrationDetails));
+  }, [registrationDetails]);
 
   const submit = (details) => {
     if (formMode === 'add') {
+      const isDuplicate = registrationDetails.some(item => item.id === details.id);
+      if (isDuplicate) {
+        setIdError('ID number already registered.');
+        alert('ID number already registered.');
+        return;
+      }
       setRegistrationDetails([...registrationDetails, details]);
+      alert('Registration successful!');
     } else if (formMode === 'edit') {
       const updatedRegistrationDetails = [...registrationDetails];
       updatedRegistrationDetails[currentIndex] = details;
       setRegistrationDetails(updatedRegistrationDetails);
+      alert('Record updated successfully!');
     }
     setFormOpen(false);
+    setIdError(''); 
   };
 
   const handleEdit = (index) => {
@@ -40,8 +61,17 @@ function App() {
     details.names.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleViewProfile = (index) => {
+    setViewProfile(registrationDetails[index]);
+  };
+
+  const closeProfile = () => {
+    setViewProfile(null);
+  };
+
   return (
     <div className="App">
+      <Navbar />
       <input
         type="text"
         placeholder="Search..."
@@ -53,6 +83,7 @@ function App() {
         registrationDetails={filteredDetails} 
         onEdit={handleEdit} 
         onDelete={handleDelete} 
+        onViewProfile={handleViewProfile}
       />
       <button className='btn' onClick={() => {
         setFormMode('add');
@@ -65,6 +96,19 @@ function App() {
           initialDetails={formMode === 'edit' ? registrationDetails[currentIndex] : null}
         />
       }
+      {viewProfile && (
+        <div className='profile-modal'>
+          <div className='profile-modal-content'>
+            <h2>Employee Details</h2>
+            <p><strong>Full Name:</strong> {viewProfile.names}</p>
+            <p><strong>ID No.:</strong> {viewProfile.id}</p>
+            <p><strong>Address:</strong> {viewProfile.address}, {viewProfile.suburb}, {viewProfile.city}, {viewProfile.zip}</p>
+            <p><strong>Contact No.:</strong> {viewProfile.contact}</p>
+            <p><strong>Email:</strong> {viewProfile.email}</p>
+            <button className='close-btn' onClick={closeProfile}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

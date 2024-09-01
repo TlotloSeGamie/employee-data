@@ -10,6 +10,7 @@ function Form({ closeForm, onSubmit, initialDetails }) {
     zip: "", 
     contact: "", 
     email: "",
+    image: null, 
   });
 
   const [errors, setErrors] = useState({
@@ -29,18 +30,15 @@ function Form({ closeForm, onSubmit, initialDetails }) {
     let idError = "";
     let contactError = "";
 
-    // Email validation
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(formState.email)) {
       emailError = "Invalid email format";
     }
 
-    // ID validation
-    if (!/^\d{1,13}$/.test(formState.id)) {
-      idError = "ID must be numeric and not more than 13 digits";
+    if (!/^\d{13}$/.test(formState.id)) {
+      idError = "ID must be exactly 13 digits";
     }
 
-    // Contact validation
     if (!/^\d{1,10}$/.test(formState.contact)) {
       contactError = "Contact must be numeric and not more than 10 digits";
     }
@@ -64,10 +62,18 @@ function Form({ closeForm, onSubmit, initialDetails }) {
     });
   };
 
+  const handleFileChange = (e) => {
+    setFormState({
+      ...formState,
+      image: e.target.files[0] 
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
       onSubmit(formState);
+      closeForm(); 
     }
   };
 
@@ -149,18 +155,30 @@ function Form({ closeForm, onSubmit, initialDetails }) {
             <div className='error'>{errors.contact}</div>
           </div>
           <div>
-            <label htmlFor='email'>Email:</label>
+            <label htmlFor='email'>Email Address:</label>
             <input 
               name='email' 
               type='text' 
-              placeholder='example@example.com' 
+              placeholder='Email Address' 
               value={formState.email} 
               onChange={handleChange} 
               className='email'
             />
             <div className='error'>{errors.email}</div>
           </div>
-          <button type='submit' className='btn'>Submit</button>
+          <div>
+            <label htmlFor='image'>Upload Image:</label>
+            <input 
+              name='image' 
+              type='file' 
+              accept='image/*'
+              onChange={handleFileChange} 
+            />
+          </div>
+          <div className='form-buttons'>
+            <button type='submit' className='btn'>Submit</button>
+            <button type='button' onClick={closeForm} className='btn'>Cancel</button>
+          </div>
         </form>
       </div>
     </div>
