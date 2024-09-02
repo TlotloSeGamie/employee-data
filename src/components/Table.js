@@ -46,7 +46,7 @@ function Table({ registrationDetails, onEdit, onDelete }) {
           {selectedProfile && (
             <div className='profile-popout'>
               <button className='close-profile' onClick={handleCloseProfile}>Close</button>
-              <h2>Profile Details</h2>
+              <h2>Employee Details</h2>
               {selectedProfile.image && (
                 <img 
                   src={URL.createObjectURL(selectedProfile.image)} 
@@ -63,7 +63,7 @@ function Table({ registrationDetails, onEdit, onDelete }) {
           )}
         </div>
       ) : (
-        <p className='no-data-message'>No record</p>
+        <p className='no-data-message'>No employee data</p>
       )}
     </div>
   );
