@@ -73,8 +73,14 @@ function Form({ closeForm, onSubmit, initialDetails }) {
     e.preventDefault();
     if (validate()) {
       onSubmit(formState);
+
+      const storedData = JSON.parse(localStorage.getItem('registrationDetails')) || [];
+      storedData.push(formState);
+      localStorage.setItem('registrationDetails', JSON.stringify(storedData));
+
       closeForm(); 
     }
+
   };
 
   return (
