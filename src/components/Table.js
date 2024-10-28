@@ -10,6 +10,13 @@ function Table({ registrationDetails, onEdit, onDelete }) {
   const handleCloseProfile = () => {
     setSelectedProfile(null);
   };
+ 
+  const handleEdit = (index) => {
+    const selectedData = registrationDetails[index];
+    onEdit(selectedData); 
+  };
+
+  
 
   return (
     <div className='table-wrap'>
@@ -18,6 +25,7 @@ function Table({ registrationDetails, onEdit, onDelete }) {
           <table className='table'>
             <thead className='header'>
               <tr className='heads'>
+              <th>Role</th>
                 <th>Full Name</th>
                 <th>ID No.</th>
                 <th>Contact No.</th>
@@ -28,8 +36,10 @@ function Table({ registrationDetails, onEdit, onDelete }) {
             <tbody>
               {registrationDetails.map((data, index) => (
                 <tr key={index}>
-                  <td>{data.names}</td>
-                  <td>{data.id}</td>
+                  <td>{data.role}</td>
+                  <td>{data.firstName +" "+data.lastName}</td>
+                  <td>{data.gender}</td>
+                  <td>{data.idNumber}</td>
                   <td>{data.contact}</td>
                   <td>{data.email}</td>
                   <td>
@@ -54,8 +64,10 @@ function Table({ registrationDetails, onEdit, onDelete }) {
                   className='profile-image'
                 />
               )}
-              <p><strong>Full Name:</strong> {selectedProfile.names}</p>
-              <p><strong>ID No.:</strong> {selectedProfile.id}</p>
+              <p><strong>Role:</strong> {selectedProfile.role}</p>
+              <p><strong>Full Name:</strong> {selectedProfile.firstName +" "+ selectedProfile.lastName}</p>
+              <p><strong>Gender:</strong> {selectedProfile.gender}</p>
+              <p><strong>ID No.:</strong> {selectedProfile.idNumber}</p>
               <p><strong>Address:</strong> {selectedProfile.address}, {selectedProfile.suburb}, {selectedProfile.city}, {selectedProfile.zip}</p>
               <p><strong>Contact No.:</strong> {selectedProfile.contact}</p>
               <p><strong>Email:</strong> {selectedProfile.email}</p>

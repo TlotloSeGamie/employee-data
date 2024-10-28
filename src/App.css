@@ -29,7 +29,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   padding-top: 60px;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .btn {
-  padding: 10px 20px;
+  padding: 10px 40px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -130,11 +130,17 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
+.form-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .register {
   border-radius: 5px;
   padding: 2rem;
   background-color: white;
-  width: 400px;
+  width: 800px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 

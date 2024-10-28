@@ -1,0 +1,131 @@
+
+.main-container {
+    width: 100%;
+  }
+
+  .heading {
+    width: 40%;
+    height: 30%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    bottom: 7rem;
+    color: #ffffff;
+    /* padding: 30px; */
+    margin-bottom: 20px;
+    color: #ffffff;
+    background-color: #007bff;
+    border-radius: 50%;
+    box-shadow: 0 14px 20px rgba(0, 0, 0, 0.1);
+
+    text-align: center;
+  }
+
+  .form-container {
+    position: relative;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
+    font-family: Arial, sans-serif;
+  }
+  
+  /* .form-container h4 {
+    margin-bottom: 20px;
+    color: #333333;
+    text-align: center;
+  } */
+
+  .form-container h3 {
+    margin-bottom: 20px;
+    color: #333333;
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555555;
+  }
+  body, h3, label {
+    margin: 0;
+    padding: 0;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 70%;
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border 0.3s;
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  span {
+    color: red;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+  }
+  
+
+  .btn {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+/*   
+  .btn[type="button"] {
+    background-color: #f8f9fa;
+    color: #007bff;
+    border: 1px solid #007bff;
+  } */
+
+.login-link {
+    color: #007bff;
+    text-decoration: none; 
+    font-size: 20px; 
+    font-weight: 500; 
+    transition: color 0.3s ease;
+  }
+  
+  .login-link:hover {
+    color: #0056b3; 
+    text-decoration: underline; 
+    cursor: pointer; 
+  }
+  
+  li {
+    list-style-type: none; 
+    margin-top: 10px; 
+    text-align: center; 
+  }
+  
