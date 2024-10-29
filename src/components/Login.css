@@ -1,6 +1,6 @@
 
 .main-container {
-    width: 100%;
+    width: 50%;
   }
 
   .heading {
@@ -25,7 +25,7 @@
 
   .form-container {
     position: relative;
-    width: 80%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -109,7 +109,7 @@
     border: 1px solid #007bff;
   } */
 
-.login-link {
+.register-link {
     color: #007bff;
     text-decoration: none; 
     font-size: 20px; 
@@ -117,8 +117,8 @@
     transition: color 0.3s ease;
   }
   
-  .login-link:hover {
-    color: #0056b3; 
+  .register-link:hover {
+    color: #0a407a; 
     text-decoration: underline; 
     cursor: pointer; 
   }

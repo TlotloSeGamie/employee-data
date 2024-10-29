@@ -90,44 +90,19 @@ const handleFileChange =  async (e) => {
   });
 };
 
-const handleSubmit = async (e) => {
-  e.preventDefault(); 
-  if (validate()) {
-    
-    alert(formState.idNumber)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      onSubmit(formState);
 
-    let details = {
-      role: formState.role,
-      firstName: formState.names.split(" ")[0],
-      lastName: formState.names.split(" ")[1],
-      gender: formState.gender,
-      idNumber: formState.idNumber,
-      address: formState.address,
-      suburb: formState.suburb,
-      zip: formState.zip,
-      contact: formState.contact,
-      email: formState.email,
-      image: formState.image,
-    };
+      const storedData = JSON.parse(localStorage.getItem('registrationDetails')) || [];
+      storedData.push(formState);
+      localStorage.setItem('registrationDetails', JSON.stringify(storedData));
 
-    try {
-      const response = await axios.post('http://localhost:5000/api/addEmployee', details);
-      if (response.status === 200) {
-        alert('Employee added successfully!');
-        setRegistrationDetails([...registrationDetails, details]);
-      } else {
-        alert('Error adding employee');
-      }
-    } catch (error) {
-      console.error("Error in adding employee", error);
-      alert('Failed to add employee');
+      closeForm(); 
     }
 
-   
-    closeForm();
-  }
-};
-
+  };
 
 return (
   <div

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./Register.css";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register({ onFormSwitch }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -46,8 +48,23 @@ function Register({ onFormSwitch }) {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const emailExists = users.some(user => user.email === formData.email);
+      if (emailExists) {
+        setErrors({ email: "Email already exists" });
+        return;
+      }
+
+      users.push({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password
+      });
+
+      localStorage.setItem('users', JSON.stringify(users));
+
       alert("Registered Successfully");
-      onFormSwitch('login');
+      navigate("/");
     }
   }
 
@@ -55,7 +72,6 @@ function Register({ onFormSwitch }) {
     <div className="main-container">
       <form className="form-container" onSubmit={handleSubmit}>
         <h3>Sign Up</h3>
-        <label htmlFor="username"><b>Username</b></label>
         <input
           type="text"
           placeholder="Username"
@@ -64,7 +80,6 @@ function Register({ onFormSwitch }) {
           onChange={handleChange}
         />
         {errors.username && <span>{errors.username}</span>}
-        <label htmlFor="email"><b>Email Address</b></label>
         <input
           type="text"
           placeholder="example@gmail.com"
@@ -73,7 +88,6 @@ function Register({ onFormSwitch }) {
           onChange={handleChange}
         />
         {errors.email && <span>{errors.email}</span>}
-        <label htmlFor="password"><b>Create Password</b></label>
         <input
           type="password"
           placeholder="Create password"
@@ -91,7 +105,7 @@ function Register({ onFormSwitch }) {
         />
         {errors.confirmPassword && <span>{errors.confirmPassword}</span>}
         <button className="btn" type="submit">Create Account</button>
-        <li><a href="#" className="login-link" onClick={() => onFormSwitch('login')} >Already have an account? Log In</a></li>
+        <Link to="/" className='login-link'>Already have an account? Log In</Link>
       </form>
     </div>
   );

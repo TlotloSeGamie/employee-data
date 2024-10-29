@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
+import { Link, useNavigate } from "react-router-dom"; 
 
-function Login({ onFormSwitch, onLogin }) {
+function Login({ onLogin }) { 
+  const navigate = useNavigate(); 
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -44,7 +46,15 @@ function Login({ onFormSwitch, onLogin }) {
       return;
     }
 
-    onLogin(); 
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(user => user.email === formData.email && user.password === formData.password);
+
+    if (user) {
+      onLogin(user);
+      navigate("/home");
+    } else {
+      setErrors({ form: 'Invalid email or password' });
+    }
   };
 
   return (
@@ -54,7 +64,6 @@ function Login({ onFormSwitch, onLogin }) {
           <h2>Employee Database</h2>
         </div>
         <h4>Sign In</h4>
-        <label htmlFor="username"><b>Username</b></label>
         <input
           type="text"
           placeholder="Username"
@@ -63,7 +72,6 @@ function Login({ onFormSwitch, onLogin }) {
           onChange={handleChange}
         />
         {errors.username && <span>{errors.username}</span>}
-        <label htmlFor="email"><b>Email Address</b></label>
         <input
           type="text"
           placeholder="example@gmail.com"
@@ -72,7 +80,6 @@ function Login({ onFormSwitch, onLogin }) {
           onChange={handleChange}
         />
         {errors.email && <span>{errors.email}</span>}
-        <label htmlFor="password"><b>Password</b></label>
         <input
           type="password"
           placeholder="Password"
@@ -81,11 +88,10 @@ function Login({ onFormSwitch, onLogin }) {
           onChange={handleChange}
         />
         {errors.password && <span>{errors.password}</span>}
+        {errors.form && <span>{errors.form}</span>} {/* Display general form error */}
         <button type="submit" className="btn">Log In</button>
         <li>
-          <a href="#" className="login-link" onClick={() => onFormSwitch('register')}>
-            Don't have an account? Register
-          </a>
+          <Link to="/register" className='register-link'>Don't have an account? Register</Link>
         </li>
       </form>
     </div>
