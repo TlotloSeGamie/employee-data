@@ -15,22 +15,14 @@ function Home() {
   const [idError, setIdError] = useState('');
 
   useEffect(() => {
-    try {
-      const storedDetails = JSON.parse(localStorage.getItem('registrationDetails')) || [];
-      console.log("Loaded details from local storage:", storedDetails);
-      setRegistrationDetails(storedDetails);
-    } catch (error) {
-      console.error("Failed to load data from local storage:", error);
+    const storedDetails = localStorage.getItem('registrationDetails');
+    if (storedDetails) {
+      setRegistrationDetails(JSON.parse(storedDetails));
     }
   }, []);
-
+  
   useEffect(() => {
-    try {
-      console.log("Saving details to local storage:", registrationDetails);
-      localStorage.setItem('registrationDetails', JSON.stringify(registrationDetails));
-    } catch (error) {
-      console.error("Failed to save data to local storage:", error);
-    }
+    localStorage.setItem('registrationDetails', JSON.stringify(registrationDetails));
   }, [registrationDetails]);
 
   const submit = (details) => {
@@ -112,6 +104,7 @@ function Home() {
           <div className='profile-modal-content'>
             <h2>Employee Details</h2>
             <p><strong>Full Name:</strong> {viewProfile.names}</p>
+            <p><strong>Gender:</strong> {viewProfile.gender}</p>
             <p><strong>ID No.:</strong> {viewProfile.id}</p>
             <p><strong>Address:</strong> {viewProfile.address}, {viewProfile.suburb}, {viewProfile.city}, {viewProfile.zip}</p>
             <p><strong>Contact No.:</strong> {viewProfile.contact}</p>

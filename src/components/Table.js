@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function Table({ registrationDetails, onEdit, onDelete }) {
+function Table({ registrationDetails, setRegistrationDetails, onEdit, onDelete }) {
   const [selectedProfile, setSelectedProfile] = useState(null);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem('registrationDetails', JSON.stringify(registrationDetails));
+    } catch (error) {
+      console.error("Failed to save data to localStorage:", error);
+    }
+  }, [registrationDetails]);
+
+  // Handle deleting a record
+  const handleDelete = (index) => {
+    const updatedDetails = registrationDetails.filter((_, i) => i !== index);
+    setRegistrationDetails(updatedDetails); // Update state and trigger localStorage save
+  };
+
+  // Handle viewing profile
   const handleViewProfile = (index) => {
     setSelectedProfile(registrationDetails[index]);
   };
 
   const handleCloseProfile = () => {
     setSelectedProfile(null);
-  };
- 
-  const handleEdit = (index) => {
-    const selectedData = registrationDetails[index];
-    onEdit(selectedData); 
   };
 
   
@@ -27,6 +37,7 @@ function Table({ registrationDetails, onEdit, onDelete }) {
               <tr className='heads'>
               <th>Role</th>
                 <th>Full Name</th>
+                <th>Gender</th>
                 <th>ID No.</th>
                 <th>Contact No.</th>
                 <th>Email</th>
@@ -37,7 +48,7 @@ function Table({ registrationDetails, onEdit, onDelete }) {
               {registrationDetails.map((data, index) => (
                 <tr key={index}>
                   <td>{data.role}</td>
-                  <td>{data.firstName +" "+data.lastName}</td>
+                  <td>{data.names}</td>
                   <td>{data.gender}</td>
                   <td>{data.idNumber}</td>
                   <td>{data.contact}</td>
@@ -63,9 +74,9 @@ function Table({ registrationDetails, onEdit, onDelete }) {
                   alt='Profile' 
                   className='profile-image'
                 />
-              )}
+              )} 
               <p><strong>Role:</strong> {selectedProfile.role}</p>
-              <p><strong>Full Name:</strong> {selectedProfile.firstName +" "+ selectedProfile.lastName}</p>
+              <p><strong>Full Name:</strong> {selectedProfile.names}</p>
               <p><strong>Gender:</strong> {selectedProfile.gender}</p>
               <p><strong>ID No.:</strong> {selectedProfile.idNumber}</p>
               <p><strong>Address:</strong> {selectedProfile.address}, {selectedProfile.suburb}, {selectedProfile.city}, {selectedProfile.zip}</p>
